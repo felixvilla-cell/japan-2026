@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nishiki Market - Japan 2026</title><link rel="stylesheet" href="style.css"></head><body>
+<div id="progress"></div><canvas id="petals"></canvas>
+<a class="back" href="../kyoto-osaka-week-two.html">&larr; Itinerary</a>
+<section class="hero"><div class="bg" style="background-image:url('../img/g/nishiki-1.jpg')"></div><div class="veil"></div>
+<div class="inner"><div class="jp">錦市場</div><div class="badge">Day 8</div><h1>Nishiki Market</h1><div class="tag">Kyoto&#x27;s kitchen</div></div></section>
+<div class="wrap">
+<div class="intro"><p>A five-block covered market street that has fed Kyoto for 400 years. Over a hundred stalls of skewers, sweets, pickles and seafood, perfect for a grazing first lunch straight off the bullet train.</p></div>
+<div class="gallery"><figure><img src="../img/g/nishiki-1.jpg" alt="Nishiki Market" loading="lazy"></figure><figure><img src="../img/g/nishiki-2.jpg" alt="Nishiki Market" loading="lazy"></figure><figure><img src="../img/g/nishiki-3.jpg" alt="Nishiki Market" loading="lazy"></figure></div>
+<div class="section-h">Things to <span>do</span></div>
+<div class="cards"><div class="card"><h3><span class="n">01</span>Skewer crawl</h3><p>Grilled scallops, wagyu skewers, fried chicken, eat your way stall to stall.</p></div><div class="card"><h3><span class="n">02</span>Tamagoyaki</h3><p>Warm, sweet rolled omelet made in front of you, a market classic.</p></div><div class="card"><h3><span class="n">03</span>Weird &amp; wonderful</h3><p>Baby octopus with a quail egg inside its head, tiny candied fish, pickle barrels.</p></div><div class="card"><h3><span class="n">04</span>Matcha everything</h3><p>Soft serve, warabi mochi and lattes, your first taste of Uji tea before the real thing.</p></div><div class="card"><h3><span class="n">05</span>Knife shops</h3><p>Aritsugu has forged blades here since 1560, worth a look even if you don&#x27;t buy.</p></div></div>
+<div class="tips"><h3>Good to know</h3><ul><li>Eat standing at the stall you bought from, walking and eating is frowned on.</li><li>Go hungry and order small everywhere.</li><li>Most stalls wind down by late afternoon, it&#x27;s a lunch spot not a dinner one.</li></ul></div>
+<div class="foot"><a class="home" href="../kyoto-osaka-week-two.html">&larr; Back to the itinerary</a><a class="more" href="https://en.wikipedia.org/wiki/Nishiki_Market" target="_blank" rel="noopener">Read more &#8599;</a></div>
+</div><script>
+var bar=document.getElementById('progress');
+function os(){var h=document.documentElement;bar.style.width=(h.scrollTop)/(h.scrollHeight-h.clientHeight||1)*100+'%';}
+document.addEventListener('scroll',os,{passive:true});os();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.card,.gallery figure').forEach(function(el){io.observe(el);});
+var c=document.getElementById('petals'),x=c.getContext('2d'),W,H,ps=[];
+function sz(){W=c.width=innerWidth;H=c.height=innerHeight;}sz();addEventListener('resize',sz);
+var CO=['#f7c6d0','#f4b4c2','#ffd9e0','#e79bb0'];
+function mk(){return{x:Math.random()*W,y:Math.random()*-H,r:5+Math.random()*7,sp:1+Math.random()*1.7,sw:Math.random()*6,sws:.01+Math.random()*.03,ro:Math.random()*6,ros:(Math.random()-.5)*.06,co:CO[(Math.random()*CO.length)|0],op:.5+Math.random()*.4};}
+for(var i=0;i<26;i++)ps.push(mk());
+function pt(p){x.save();x.translate(p.x,p.y);x.rotate(p.ro);x.globalAlpha=p.op;x.fillStyle=p.co;x.beginPath();x.moveTo(0,0);
+x.bezierCurveTo(p.r*.5,-p.r*.6,p.r,-p.r*.2,p.r*.9,p.r*.4);x.bezierCurveTo(p.r*.7,p.r,-p.r*.7,p.r,-p.r*.9,p.r*.4);
+x.bezierCurveTo(-p.r,-p.r*.2,-p.r*.5,-p.r*.6,0,0);x.fill();x.restore();}
+function tk(){x.clearRect(0,0,W,H);for(var i=0;i<ps.length;i++){var p=ps[i];p.y+=p.sp;p.sw+=p.sws;p.x+=Math.sin(p.sw)*.8;p.ro+=p.ros;if(p.y>H+20){ps[i]=mk();ps[i].y=-20;}pt(p);}requestAnimationFrame(tk);}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tk();
+</script></body></html>

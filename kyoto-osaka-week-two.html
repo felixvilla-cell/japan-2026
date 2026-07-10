@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan 2026 - Kyoto &amp; Osaka, Week Two</title>
+<style>
+  :root{
+    --ink:#1a1a2e;--paper:#f7f4ef;--crimson:#b3352d;--crimson-deep:#8c241d;
+    --indigo:#22304f;--gold:#c8a24a;--muted:#6b6b7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Hiragino Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .deck{max-width:1000px;margin:0 auto;position:relative;z-index:2;}
+  #petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;}
+  #progress{position:fixed;top:0;left:0;height:4px;width:0%;z-index:50;
+    background:linear-gradient(90deg,var(--gold),var(--crimson));box-shadow:0 0 12px rgba(200,162,74,.6);transition:width .1s linear;}
+  .back{position:fixed;top:14px;left:14px;z-index:40;background:rgba(20,29,49,.72);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 14px;border-radius:20px;border:1px solid rgba(200,162,74,.5);backdrop-filter:blur(6px);}
+  .back:hover{background:var(--crimson);}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;color:var(--paper);padding:60px 30px;position:relative;overflow:hidden;}
+  .hero .bg{position:absolute;inset:0;background-image:url('img/kyoto.jpg');background-size:cover;background-position:center;
+    transform:scale(1.08);animation:kenburns 22s ease-in-out infinite alternate;}
+  @keyframes kenburns{from{transform:scale(1.08);}to{transform:scale(1.22) translateY(-2%);}}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,26,44,.72),rgba(13,20,32,.9));}
+  .hero .sun{position:absolute;top:-120px;right:-120px;width:460px;height:460px;border-radius:50%;
+    background:radial-gradient(circle,rgba(179,53,45,.5) 0%,rgba(179,53,45,0) 70%);animation:pulseSun 7s ease-in-out infinite;}
+  @keyframes pulseSun{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.18);opacity:1;}}
+  .hero>*{position:relative;z-index:2;}
+  .hero .kanji{font-size:clamp(80px,18vw,190px);color:var(--crimson);font-weight:800;line-height:.9;letter-spacing:8px;
+    text-shadow:0 4px 40px rgba(179,53,45,.7);opacity:0;transform:scale(.4) rotate(-8deg);
+    animation:kanjiIn 1.1s cubic-bezier(.2,.9,.25,1.3) .2s forwards;}
+  @keyframes kanjiIn{to{opacity:1;transform:scale(1) rotate(0);}}
+  .hero h1{font-size:clamp(34px,6vw,64px);font-weight:800;margin-top:18px;letter-spacing:1px;text-shadow:0 3px 20px rgba(0,0,0,.5);
+    opacity:0;transform:translateY(30px);animation:riseIn .9s ease .7s forwards;}
+  .hero .sub{font-size:clamp(16px,2.6vw,22px);color:var(--gold);margin-top:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+    opacity:0;transform:translateY(30px);animation:riseIn .9s ease .95s forwards;}
+  .hero .dates{margin-top:26px;font-size:18px;color:#e7ecf5;text-shadow:0 2px 12px rgba(0,0,0,.6);
+    opacity:0;transform:translateY(30px);animation:riseIn .9s ease 1.15s forwards;}
+  .hero .dates b{color:#fff;}
+  .hero .for{margin-top:40px;font-size:16px;color:#cdd5e4;font-style:italic;text-shadow:0 2px 10px rgba(0,0,0,.6);
+    opacity:0;animation:fadeIn 1s ease 1.5s forwards;}
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeIn{to{opacity:1;}}
+  .scroll-hint{margin-top:48px;font-size:13px;color:#c2ccdd;letter-spacing:3px;text-transform:uppercase;opacity:0;animation:fadeIn 1s ease 1.9s forwards;}
+  .scroll-hint .arrow{display:block;margin-top:8px;font-size:20px;animation:bounce 1.8s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(10px);opacity:1;}}
+
+  /* ---------- STRIP ---------- */
+  .strip{background:var(--crimson);color:var(--paper);padding:34px 30px;text-align:center;position:relative;overflow:hidden;}
+  .strip p{max-width:720px;margin:0 auto;font-size:clamp(16px,2.4vw,20px);}
+  .route-line{margin-top:22px;position:relative;height:40px;max-width:640px;margin:22px auto 0;}
+  .route-track{position:absolute;top:19px;left:0;right:0;height:3px;background:rgba(255,255,255,.35);border-radius:2px;overflow:hidden;}
+  .route-track:after{content:"";position:absolute;top:0;left:0;height:100%;width:200%;
+    background:repeating-linear-gradient(90deg,#ffe9c9 0 14px,transparent 14px 28px);animation:dash 1.2s linear infinite;}
+  @keyframes dash{to{transform:translateX(28px);}}
+  .train{position:absolute;top:8px;left:0;width:26px;height:14px;border-radius:5px 9px 9px 5px;
+    background:linear-gradient(90deg,#fff,#ffe9c9);box-shadow:0 2px 6px rgba(0,0,0,.3);animation:ride 6s cubic-bezier(.45,0,.55,1) infinite;}
+  .train:before{content:"";position:absolute;right:-3px;top:3px;width:6px;height:8px;background:var(--gold);border-radius:0 4px 4px 0;}
+  @keyframes ride{0%{left:-30px;}45%{left:calc(100% - 10px);}55%{left:calc(100% - 10px);}100%{left:-30px;}}
+  .route-stops{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 14px;margin-top:22px;
+    font-weight:700;letter-spacing:1px;font-size:13px;color:#fff;text-transform:uppercase;}
+  .route-stops i{color:#ffe9c9;opacity:.75;font-style:normal;font-size:15px;}
+
+  /* ---------- DAYS ---------- */
+  .days{padding:20px;}
+  .day{background:#fff;border-radius:16px;margin:34px 0;overflow:hidden;box-shadow:0 10px 40px rgba(34,48,79,.12);border:1px solid #ece7dd;
+    opacity:0;transform:translateY(60px) scale(.97);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease;}
+  .day.show{opacity:1;transform:translateY(0) scale(1);}
+  .day:hover{box-shadow:0 22px 60px rgba(34,48,79,.22);transform:translateY(-6px) scale(1.008);}
+
+  .day-photo{position:relative;height:260px;overflow:hidden;background:#22304f;}
+  .day-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s ease;}
+  .day:hover .day-photo img{transform:scale(1.07);}
+  .day-photo .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,29,49,.05) 30%,rgba(20,29,49,.55) 65%,rgba(20,29,49,.92) 100%);}
+  .day-head{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:18px;padding:22px 26px;color:#fff;}
+  .day-num{flex:none;width:62px;height:62px;border-radius:50%;background:var(--crimson);display:flex;flex-direction:column;
+    justify-content:center;align-items:center;border:3px solid var(--gold);box-shadow:0 6px 18px rgba(0,0,0,.35);}
+  .day.show .day-num{animation:pop .7s cubic-bezier(.2,.9,.25,1.5) .2s both, ring 2.2s ease-out .7s;}
+  @keyframes pop{0%{transform:scale(0) rotate(-30deg);}100%{transform:scale(1) rotate(0);}}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(200,162,74,.55);}100%{box-shadow:0 0 0 22px rgba(200,162,74,0);}}
+  .day-num small{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.85;}
+  .day-num b{font-size:25px;line-height:1;}
+  .day-title h2{font-size:clamp(20px,3vw,28px);font-weight:800;text-shadow:0 2px 12px rgba(0,0,0,.6);}
+  .day-title .tag{color:var(--gold);font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-top:3px;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+  .day-body{padding:24px 28px;}
+  .day-body p{font-size:16.5px;color:#33333f;}
+  .beats{list-style:none;margin-top:18px;display:grid;gap:12px;}
+  .beats li{display:flex;gap:14px;align-items:flex-start;padding:0;background:var(--paper);border-radius:10px;border-left:4px solid var(--gold);
+    opacity:0;transform:translateX(-18px);transition:opacity .5s ease,transform .5s ease,background .25s ease;}
+  .day.show .beats li{opacity:1;transform:translateX(0);}
+  .day.show .beats li:nth-child(1){transition-delay:.3s;}
+  .day.show .beats li:nth-child(2){transition-delay:.42s;}
+  .day.show .beats li:nth-child(3){transition-delay:.54s;}
+  .day.show .beats li:nth-child(4){transition-delay:.66s;}
+  .beats li:hover{background:#fbeee0;}
+  .beats li a.lnk{display:flex;gap:12px;align-items:flex-start;width:100%;padding:12px 16px;
+    text-decoration:none;color:#33333f;border-radius:10px;transition:transform .2s ease;}
+  .beats li:hover a.lnk{transform:translateX(4px);}
+  .beats li a.lnk .dot{color:var(--crimson);font-weight:800;flex:none;}
+  .beats li a.lnk .txt{flex:1;}
+  .beats li a.lnk b{color:var(--indigo);border-bottom:1px solid rgba(34,48,79,.25);}
+  .beats li a.lnk .go{flex:none;color:var(--gold);font-size:14px;font-weight:800;margin-top:1px;transition:transform .2s ease,color .2s ease;}
+  .beats li:hover a.lnk .go{color:var(--crimson);transform:translate(2px,-2px);}
+  .pill{display:inline-block;margin-top:16px;padding:6px 14px;border-radius:20px;background:#fbeee0;color:var(--crimson-deep);font-size:13px;font-weight:700;}
+
+  /* ---------- NEXT / BOOKING ---------- */
+  .next{background:linear-gradient(160deg,#22304f,#141d31);color:var(--paper);padding:60px 30px;text-align:center;margin-top:30px;
+    opacity:0;transform:translateY(50px);transition:opacity .8s ease,transform .8s ease;}
+  .next.show{opacity:1;transform:translateY(0);}
+  .next h3{font-size:clamp(24px,4vw,34px);color:var(--gold);font-weight:800;}
+  .next p{max-width:640px;margin:16px auto 0;font-size:17px;color:#cfd6e4;}
+  .next .cities{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:30px;}
+  .next .city{width:230px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(200,162,74,.35);
+    text-decoration:none;transition:transform .35s ease,box-shadow .35s ease;}
+  .next .city:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,.4);}
+  .next .city .ph{height:140px;overflow:hidden;}
+  .next .city .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;}
+  .next .city:hover .ph img{transform:scale(1.08);}
+  .next .city .cap{padding:14px 12px;}
+  .next .city b{display:block;font-size:19px;color:#fff;}
+  .next .city span{font-size:13px;color:var(--gold);}
+  .footer{padding:26px;text-align:center;color:var(--muted);font-size:13px;}
+  .footer a{color:var(--crimson);font-weight:700;text-decoration:none;}
+  .footer a:hover{color:var(--crimson-deep);}
+
+  @media(max-width:600px){.day-photo{height:210px;}.day-head{gap:12px;padding:16px 18px;}}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .hero .kanji,.hero h1,.hero .sub,.hero .dates,.hero .for,.scroll-hint,.day,.next,.beats li{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<canvas id="petals"></canvas>
+<a class="back" href="tokyo-week-one.html">&larr; Week One</a>
+<div class="deck">
+
+  <section class="hero">
+    <div class="bg"></div><div class="veil"></div><div class="sun"></div>
+    <div class="kanji">京都</div>
+    <h1>KYOTO &amp; OSAKA</h1>
+    <div class="sub">Dad &amp; Felix &middot; Week Two</div>
+    <div class="dates"><b>August 8 &ndash; 15, 2026</b> &nbsp;&middot;&nbsp; The bullet train south</div>
+    <div class="for">Built on your picks: Nintendo everything, the onsen pace kept, Hiroshima on the board.</div>
+    <div class="scroll-hint">scroll<span class="arrow">&darr;</span></div>
+  </section>
+
+  <section class="strip">
+    <p>Saturday morning you ride the Shinkansen south. Kyoto for the old Japan, a pilgrimage to Nintendo itself in Uji, then Osaka &mdash; the loudest, tastiest, most arcade-dense stretch of the whole trip.</p>
+    <div class="route-line"><div class="route-track"></div><div class="train"></div></div>
+    <div class="route-stops"><span>Tokyo</span><i>&rarr;</i><span>Kyoto</span><i>&rarr;</i><span>Uji</span><i>&rarr;</i><span>Osaka</span><i>&rarr;</i><span>Hiroshima</span></div>
+  </section>
+
+  <section class="days">
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/gion-1.jpg" alt="Gion at dusk" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>8</b></div>
+          <div class="day-title"><h2>South on the Bullet Train</h2><div class="tag">Tokyo &rarr; Kyoto &middot; Sat Aug 8</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Pack up, grab an ekiben on the platform, and do the ride itself &mdash; 2 hours 15 to Kyoto, Mt. Fuji out the right-side window. You land mid-day, which is exactly enough for a market lunch and a first walk through the old city.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/shinkansen.html"><span class="dot">&bull;</span><span class="txt">The <b>Shinkansen</b> south &mdash; ekiben in hand, Fuji-side seats reserved</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/nishiki.html"><span class="dot">&bull;</span><span class="txt">Graze lunch through <b>Nishiki Market</b> &mdash; Kyoto's 400-year-old kitchen</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/gion.html"><span class="dot">&bull;</span><span class="txt">Evening in <b>Gion</b> &mdash; lanterns, teahouses, and maybe a geisha slipping past</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Check in &middot; lanterns after dark</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/fushimi-inari-1.jpg" alt="Fushimi Inari torii gates" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>9</b></div>
+          <div class="day-title"><h2>The Kyoto Postcard Day</h2><div class="tag">Fushimi Inari + Higashiyama &middot; Sun Aug 9</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>The two most famous sights in Japan, connected by the best old-town walk in the country. Start at sunrise &mdash; it beats the August heat and you get the red gates nearly to yourselves.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/fushimi-inari.html"><span class="dot">&bull;</span><span class="txt"><b>Fushimi Inari</b> at 7am &mdash; ten thousand red gates up the mountain</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/kiyomizu.html"><span class="dot">&bull;</span><span class="txt"><b>Kiyomizu-dera</b> &mdash; the temple on stilts hanging over the city</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/higashiyama.html"><span class="dot">&bull;</span><span class="txt">Wander down through <b>Higashiyama</b> &mdash; stone lanes, tea, and craft shops into Gion</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Early start &middot; slow afternoon</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/nintendo-museum-1.jpg" alt="Nintendo Museum, Uji" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>10</b></div>
+          <div class="day-title"><h2>Pilgrimage to Nintendo</h2><div class="tag">Nintendo Museum + Uji &middot; Mon Aug 10</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Nintendo was founded in Kyoto in 1889, and its museum sits on the site of its old factory in Uji, 20 minutes south. Every console ever made downstairs, giant playable controllers upstairs &mdash; then Japan's tea capital is right next door.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/nintendo-museum.html"><span class="dot">&bull;</span><span class="txt">The <b>Nintendo Museum</b> &mdash; spend your coins on the giant two-person NES pad first</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/uji.html"><span class="dot">&bull;</span><span class="txt"><b>Uji</b> after &mdash; Byodo-in temple and the best matcha on earth</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/gion.html"><span class="dot">&bull;</span><span class="txt">Easy Kyoto evening &mdash; dinner in <b>Pontocho alley</b> over the river</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Museum is closed Tuesdays &mdash; that's why it's Monday</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/arashiyama-1.jpg" alt="Arashiyama bamboo grove" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>11</b></div>
+          <div class="day-title"><h2>Bamboo, Gold, then Osaka</h2><div class="tag">Arashiyama + Kinkaku-ji &middot; Tue Aug 11</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Kyoto's grand finale in one sweep &mdash; the bamboo forest early, the Golden Pavilion at midday &mdash; then a 15-minute bullet-train hop and you're checked into Osaka by dinner.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/arashiyama.html"><span class="dot">&bull;</span><span class="txt"><b>Arashiyama</b> at 8am &mdash; the bamboo grove, then monkeys with a view over the city</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/kinkakuji.html"><span class="dot">&bull;</span><span class="txt"><b>Kinkaku-ji</b> &mdash; the pavilion wrapped in real gold, floating on its pond</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/dotonbori.html"><span class="dot">&bull;</span><span class="txt">Train to Osaka &middot; first neon night on <b>Dotonbori</b></span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Kyoto out &middot; Osaka in</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/universal-1.jpg" alt="Super Nintendo World train, Osaka" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>12</b></div>
+          <div class="day-title"><h2>The Big One</h2><div class="tag">Super Nintendo World &middot; Wed Aug 12</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Walk through a warp pipe and come out inside a life-size Mushroom Kingdom. This is the confirmed yes, so it gets a full day, midweek, when the park is at its calmest &mdash; which in August still means: go at rope drop.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/universal.html"><span class="dot">&bull;</span><span class="txt"><b>Super Nintendo World</b> first &mdash; Mario Kart in Bowser's Castle, Donkey Kong's coaster</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/universal.html"><span class="dot">&bull;</span><span class="txt"><b>Power-Up Band</b> coin battle all day &mdash; Dad vs Felix, scores don't lie</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/dotonbori.html"><span class="dot">&bull;</span><span class="txt">Collapse over <b>takoyaki</b> back in the city</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Express Pass on sale now &mdash; buy this week</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/dotonbori-1.jpg" alt="Dotonbori canal at night" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>13</b></div>
+          <div class="day-title"><h2>Osaka, Player Two</h2><div class="tag">Den Den Town + Dotonbori &middot; Thu Aug 13</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Osaka's answer to Akihabara &mdash; cheaper, less touristy, deeper bargain bins &mdash; plus the loudest food street in Japan and an eight-floor Round1 arcade to close the night. Akihabara Day, the sequel.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/kuromon.html"><span class="dot">&bull;</span><span class="txt">Graze lunch at <b>Kuromon Market</b> &mdash; wagyu skewers and grilled scallops</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/den-den-town.html"><span class="dot">&bull;</span><span class="txt"><b>Den Den Town</b> &mdash; retro hunting round two, second chance on anything Tokyo</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/dotonbori.html"><span class="dot">&bull;</span><span class="txt"><b>Dotonbori</b> at night &mdash; the Glico man, okonomiyaki, Round1 till late</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Arcade + food day &middot; Felix's Osaka</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/hiroshima.jpg" alt="Itsukushima torii, Miyajima" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>14</b></div>
+          <div class="day-title"><h2>The Hiroshima Day</h2><div class="tag">Peace Park + Miyajima &middot; Fri Aug 14</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>Ninety minutes west on the bullet train for the day people most often call the best of their whole trip. The Peace Memorial in the morning, Hiroshima-style okonomiyaki for lunch, and the floating torii of Miyajima in the afternoon.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/hiroshima.html"><span class="dot">&bull;</span><span class="txt"><b>Hiroshima</b> &mdash; the A-Bomb Dome and the Peace Memorial Museum, done properly</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/miyajima.html"><span class="dot">&bull;</span><span class="txt">Ferry to <b>Miyajima</b> &mdash; the great torii in the sea, deer in the streets</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/shinkansen.html"><span class="dot">&bull;</span><span class="txt"><b>Nozomi</b> back &mdash; home in Osaka by bedtime</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Optional by design &mdash; flexes out if you're beat</span>
+      </div>
+    </article>
+
+    <article class="day">
+      <div class="day-photo"><img src="img/g/osaka-castle-1.jpg" alt="Osaka Castle" loading="lazy" decoding="async"><div class="grad"></div>
+        <div class="day-head"><div class="day-num"><small>Day</small><b>15</b></div>
+          <div class="day-title"><h2>Last Morning &amp; Home</h2><div class="tag">Osaka Castle &middot; Sat Aug 15</div></div></div>
+      </div>
+      <div class="day-body">
+        <p>One calm castle morning in the park, a last market bite, and the ride to the airport. Two weeks, done right.</p>
+        <ul class="beats">
+          <li><a class="lnk" href="pages/osaka-castle.html"><span class="dot">&bull;</span><span class="txt">Morning walk at <b>Osaka Castle</b> &mdash; gold-trimmed tower over 400-year-old walls</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/kuromon.html"><span class="dot">&bull;</span><span class="txt">One last <b>market breakfast</b> and the final souvenir sweep</span><span class="go">&#8599;</span></a></li>
+          <li><a class="lnk" href="pages/ramen.html"><span class="dot">&bull;</span><span class="txt">A farewell bowl of <b>ramen</b> before the flight</span><span class="go">&#8599;</span></a></li>
+        </ul>
+        <span class="pill">Wheels up &middot; start planning the next one</span>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="next">
+    <h3>Book These Now</h3>
+    <p>Three things sell out in August. Everything else on this trip can be decided on the ground &mdash; these can't.</p>
+    <div class="cities">
+      <a class="city" href="pages/nintendo-museum.html"><div class="ph"><img src="img/g/nintendo-museum-1.jpg" alt="Nintendo Museum" loading="lazy" decoding="async"></div><div class="cap"><b>Nintendo Museum</b><span>August tickets on sale &mdash; buy this week</span></div></a>
+      <a class="city" href="pages/universal.html"><div class="ph"><img src="img/g/universal-3.jpg" alt="Super Nintendo World" loading="lazy" decoding="async"></div><div class="cap"><b>Universal Express</b><span>Timed Nintendo entry &mdash; on sale ~now</span></div></a>
+      <a class="city" href="pages/ryokan.html"><div class="ph"><img src="img/g/ryokan-1.jpg" alt="Ryokan" loading="lazy" decoding="async"></div><div class="cap"><b>Hakone Ryokan</b><span>The overnight's a keeper &mdash; book it</span></div></a>
+    </div>
+  </section>
+
+  <div class="footer">Draft itinerary &middot; built for Felix &middot; <a href="tokyo-week-one.html">back to Week One</a></div>
+
+</div>
+
+<script>
+  var bar=document.getElementById('progress');
+  function onScroll(){var h=document.documentElement;bar.style.width=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100+'%';}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.day,.next').forEach(function(el){io.observe(el);});
+
+  var c=document.getElementById('petals'),x=c.getContext('2d'),W,H,petals=[];
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  size();addEventListener('resize',size);
+  var COLORS=['#f7c6d0','#f4b4c2','#ffd9e0','#e79bb0'];
+  function make(){return{x:Math.random()*W,y:Math.random()*-H,r:6+Math.random()*7,sp:1+Math.random()*1.8,
+    sway:Math.random()*2*Math.PI,swaySp:.01+Math.random()*.03,rot:Math.random()*6,rotSp:(Math.random()-.5)*.06,
+    col:COLORS[(Math.random()*COLORS.length)|0],op:.5+Math.random()*.4};}
+  for(var i=0;i<34;i++){petals.push(make());}
+  function petal(p){x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.globalAlpha=p.op;x.fillStyle=p.col;
+    x.beginPath();x.moveTo(0,0);
+    x.bezierCurveTo(p.r*.5,-p.r*.6,p.r,-p.r*.2,p.r*.9,p.r*.4);
+    x.bezierCurveTo(p.r*.7,p.r,-p.r*.7,p.r,-p.r*.9,p.r*.4);
+    x.bezierCurveTo(-p.r,-p.r*.2,-p.r*.5,-p.r*.6,0,0);x.fill();x.restore();}
+  function tick(){x.clearRect(0,0,W,H);
+    for(var i=0;i<petals.length;i++){var p=petals[i];p.y+=p.sp;p.sway+=p.swaySp;p.x+=Math.sin(p.sway)*.8;p.rot+=p.rotSp;
+      if(p.y>H+20){petals[i]=make();petals[i].y=-20;}petal(p);}
+    requestAnimationFrame(tick);}
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){tick();}
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miyajima - Japan 2026</title><link rel="stylesheet" href="style.css"></head><body>
+<div id="progress"></div><canvas id="petals"></canvas>
+<a class="back" href="../kyoto-osaka-week-two.html">&larr; Itinerary</a>
+<section class="hero"><div class="bg" style="background-image:url('../img/g/miyajima-1.jpg')"></div><div class="veil"></div>
+<div class="inner"><div class="jp">宮島</div><div class="badge">Day 14</div><h1>Miyajima</h1><div class="tag">The floating torii</div></div></section>
+<div class="wrap">
+<div class="intro"><p>A short ferry from Hiroshima, the island of Itsukushima Shrine and its great vermilion torii standing in the sea. Deer wander the streets, oysters grill on the waterfront, and at high tide the gate appears to float.</p></div>
+<div class="gallery"><figure><img src="../img/g/miyajima-1.jpg" alt="Miyajima" loading="lazy"></figure><figure><img src="../img/g/miyajima-2.jpg" alt="Miyajima" loading="lazy"></figure><figure><img src="../img/g/miyajima-3.jpg" alt="Miyajima" loading="lazy"></figure></div>
+<div class="section-h">Things to <span>do</span></div>
+<div class="cards"><div class="card"><h3><span class="n">01</span>The great torii</h3><p>Sixteen meters of camphor wood in the water, one of the classic views of Japan. Check the tide chart, high tide floats it, low tide lets you walk to it.</p></div><div class="card"><h3><span class="n">02</span>Itsukushima Shrine</h3><p>The shrine itself stands on stilts over the bay, corridors over the water.</p></div><div class="card"><h3><span class="n">03</span>Island deer</h3><p>Tame, everywhere, and shameless about paper and snacks. Guard the map.</p></div><div class="card"><h3><span class="n">04</span>Grilled oysters &amp; momiji manju</h3><p>Hiroshima oysters off the grill, and warm maple-leaf cakes for the ferry back.</p></div><div class="card"><h3><span class="n">05</span>Mount Misen ropeway</h3><p>If legs allow, a cable car and short hike to a summit view over the Inland Sea.</p></div></div>
+<div class="tips"><h3>Good to know</h3><ul><li>The ferry from Miyajimaguchi runs constantly and takes 10 minutes.</li><li>Sunset behind the torii is the closer, time the return loosely.</li><li>JR pass or IC card covers the JR ferry.</li></ul></div>
+<div class="foot"><a class="home" href="../kyoto-osaka-week-two.html">&larr; Back to the itinerary</a><a class="more" href="https://en.wikipedia.org/wiki/Itsukushima" target="_blank" rel="noopener">Read more &#8599;</a></div>
+</div><script>
+var bar=document.getElementById('progress');
+function os(){var h=document.documentElement;bar.style.width=(h.scrollTop)/(h.scrollHeight-h.clientHeight||1)*100+'%';}
+document.addEventListener('scroll',os,{passive:true});os();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.card,.gallery figure').forEach(function(el){io.observe(el);});
+var c=document.getElementById('petals'),x=c.getContext('2d'),W,H,ps=[];
+function sz(){W=c.width=innerWidth;H=c.height=innerHeight;}sz();addEventListener('resize',sz);
+var CO=['#f7c6d0','#f4b4c2','#ffd9e0','#e79bb0'];
+function mk(){return{x:Math.random()*W,y:Math.random()*-H,r:5+Math.random()*7,sp:1+Math.random()*1.7,sw:Math.random()*6,sws:.01+Math.random()*.03,ro:Math.random()*6,ros:(Math.random()-.5)*.06,co:CO[(Math.random()*CO.length)|0],op:.5+Math.random()*.4};}
+for(var i=0;i<26;i++)ps.push(mk());
+function pt(p){x.save();x.translate(p.x,p.y);x.rotate(p.ro);x.globalAlpha=p.op;x.fillStyle=p.co;x.beginPath();x.moveTo(0,0);
+x.bezierCurveTo(p.r*.5,-p.r*.6,p.r,-p.r*.2,p.r*.9,p.r*.4);x.bezierCurveTo(p.r*.7,p.r,-p.r*.7,p.r,-p.r*.9,p.r*.4);
+x.bezierCurveTo(-p.r,-p.r*.2,-p.r*.5,-p.r*.6,0,0);x.fill();x.restore();}
+function tk(){x.clearRect(0,0,W,H);for(var i=0;i<ps.length;i++){var p=ps[i];p.y+=p.sp;p.sw+=p.sws;p.x+=Math.sin(p.sw)*.8;p.ro+=p.ros;if(p.y>H+20){ps[i]=mk();ps[i].y=-20;}pt(p);}requestAnimationFrame(tk);}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tk();
+</script></body></html>
