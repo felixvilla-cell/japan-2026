@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0f1c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<title>Japan 2026 Prep &middot; Before We Go</title>
+<style>
+  :root{
+    --bg:#0b0f1c;--bg2:#0d1220;--card:#141a2c;--text:#e9edf6;--muted:#93a0b8;
+    --crimson:#e2564c;--crimson-deep:#b3352d;--indigo:#2a3a5f;--gold:#d9b463;
+    --neon:#3fe0e0;--green:#4ade80;
+    --display:'Anton',"Helvetica Neue",Arial,sans-serif;
+    --jp:'Zen Kaku Gothic New',"Hiragino Sans",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Hiragino Sans","Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;
+    background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;padding-bottom:90px;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px;}
+
+  /* header */
+  header{padding:38px 16px 20px;text-align:center;position:relative;overflow:hidden;
+    background:linear-gradient(170deg,#131a2e,var(--bg));border-bottom:1px solid rgba(255,255,255,.07);}
+  header .sun{position:absolute;top:-140px;right:-100px;width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(226,86,76,.30) 0%,rgba(226,86,76,0) 70%);}
+  header>*{position:relative;z-index:2;}
+  header .kanji{font-family:var(--jp);font-size:52px;font-weight:900;color:var(--crimson);line-height:.95;}
+  header h1{font-family:var(--display);font-size:clamp(30px,8vw,48px);font-weight:400;letter-spacing:1px;
+    text-transform:uppercase;margin:8px 0 4px;}
+  header .sub{font-size:12px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:700;}
+  header .cd{margin-top:16px;font-size:14px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  header .cd b{color:#fff;font-size:20px;font-family:var(--display);letter-spacing:1px;}
+
+  /* progress */
+  .prog{max-width:760px;margin:22px auto 0;padding:0 16px;}
+  .prog .row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;
+    color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .prog .row b{color:#fff;font-family:var(--display);font-size:22px;letter-spacing:1px;}
+  .track{height:10px;border-radius:99px;background:rgba(255,255,255,.09);margin-top:9px;overflow:hidden;}
+  .fill{height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--crimson),var(--gold));box-shadow:0 0 14px rgba(217,180,99,.45);
+    transition:width .35s cubic-bezier(.2,.9,.25,1);}
+  .allclear{display:none;margin-top:12px;padding:12px 14px;border-radius:12px;text-align:center;
+    background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#bbf7d0;font-weight:700;}
+  .allclear.on{display:block;}
+
+  /* sections */
+  h2{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:400;
+    font-size:19px;letter-spacing:1px;text-transform:uppercase;margin:34px 0 12px;color:#fff;}
+  h2 .jp{font-family:var(--jp);font-size:24px;font-weight:900;color:var(--crimson);line-height:1;}
+  h2 .rule{flex:1;height:2px;background:linear-gradient(90deg,rgba(217,180,99,.6),transparent);border-radius:2px;}
+  h2 .n{font-family:var(--display);font-size:13px;color:var(--muted);letter-spacing:1px;}
+
+  /* items */
+  .item{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1px solid rgba(255,255,255,.07);
+    border-radius:14px;padding:14px 15px;margin-bottom:9px;cursor:pointer;
+    transition:background .18s,border-color .18s,opacity .25s;}
+  .item:active{background:#1a2138;}
+  .item.hot{border-color:rgba(226,86,76,.55);box-shadow:0 0 0 1px rgba(226,86,76,.18),0 6px 22px rgba(226,86,76,.10);}
+  .item.done{opacity:.42;}
+  .item.done .t{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.45);}
+  .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid rgba(255,255,255,.28);
+    margin-top:1px;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;}
+  .box:after{content:"";width:12px;height:7px;border-left:3px solid #0b0f1c;border-bottom:3px solid #0b0f1c;
+    transform:rotate(-45deg) scale(0);transform-origin:center;transition:transform .2s cubic-bezier(.2,.9,.25,1.4);
+    margin-top:-3px;}
+  .item.done .box{background:var(--green);border-color:var(--green);}
+  .item.done .box:after{transform:rotate(-45deg) scale(1);}
+  .body{flex:1;min-width:0;}
+  .t{font-weight:700;font-size:16px;color:#fff;}
+  .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+  .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+    padding:3px 8px;border-radius:99px;margin-left:8px;vertical-align:2px;}
+  .tag.now{background:rgba(226,86,76,.18);color:#ffb0a8;border:1px solid rgba(226,86,76,.45);}
+  .tag.tmw{background:rgba(63,224,224,.14);color:#9df0f0;border:1px solid rgba(63,224,224,.4);}
+  .tag.opt{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid rgba(255,255,255,.15);}
+  .go{display:inline-block;margin-top:9px;font-size:12.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+    text-decoration:none;color:var(--gold);border:1px solid rgba(217,180,99,.45);border-radius:99px;padding:6px 12px;}
+  .go:active{background:rgba(217,180,99,.14);}
+
+  /* notes + done panel */
+  .note{background:rgba(42,58,95,.28);border:1px solid rgba(255,255,255,.08);border-left:3px solid var(--gold);
+    border-radius:10px;padding:12px 14px;font-size:13.5px;color:#c9d3e5;margin:4px 0 14px;}
+  .note b{color:#fff;}
+  details.handled{margin-top:34px;background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0 15px;}
+  details.handled summary{cursor:pointer;padding:15px 0;font-weight:700;font-size:14px;color:var(--muted);
+    letter-spacing:1px;text-transform:uppercase;list-style:none;}
+  details.handled summary::-webkit-details-marker{display:none;}
+  details.handled summary:after{content:" \25be";color:var(--gold);}
+  details.handled[open] summary:after{content:" \25b4";}
+  details.handled ul{margin:0 0 16px;padding-left:20px;font-size:13.5px;color:#aeb9cd;}
+  details.handled li{margin-bottom:5px;}
+  details.handled li b{color:#dbe3f0;}
+
+  footer{text-align:center;padding:34px 16px 10px;color:var(--muted);font-size:12.5px;}
+  footer a{color:var(--crimson);font-weight:700;text-decoration:none;}
+  .reset{display:inline-block;margin-top:14px;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;
+    color:#6b7689;border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:6px 13px;
+    background:none;font-weight:700;cursor:pointer;font-family:inherit;}
+  .saved{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:24px;z-index:60;
+    background:rgba(20,26,44,.96);border:1px solid rgba(255,255,255,.14);border-radius:99px;
+    padding:9px 18px;font-size:12.5px;font-weight:700;color:#cfd8e8;letter-spacing:.5px;
+    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;backdrop-filter:blur(8px);}
+  .saved.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sun"></div>
+  <div class="kanji">準備</div>
+  <h1>Before We Go</h1>
+  <div class="sub">Japan 2026 &middot; Prep Checklist</div>
+  <div class="cd" id="cd"></div>
+</header>
+
+<div class="prog">
+  <div class="row"><span>Knocked out</span><span><b id="pct">0%</b></span></div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <div class="row" style="margin-top:7px;font-size:12px;"><span id="count">0 of 0 done</span><span id="left"></span></div>
+  <div class="allclear" id="allclear">Everything's done. Go to Japan.</div>
+</div>
+
+<div class="wrap">
+
+  <h2><span class="jp">切符</span>Buy These Now<span class="rule"></span><span class="n">sell-out risk</span></h2>
+  <div class="note">These two are the only things on the trip that can be <b>gone</b> if you wait. Everything else below is logistics you control.</div>
+
+  <div class="item hot" data-id="usj">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Universal Express Pass, Mon Aug 10<span class="tag now">Today</span></div>
+      <div class="d">Must include <b>timed Super Nintendo World entry</b> for two. This is FD's definite-yes day and the timed entry slots go first. Nothing in your inbox yet.</div>
+      <a class="go" href="https://www.usj.co.jp/web/en/us/tickets/express-pass" target="_blank" rel="noopener">Buy Express Pass &#8599;</a>
+    </div>
+  </div>
+
+  <div class="item hot" data-id="teamlab">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">teamLab timed tickets, Wed Aug 5<span class="tag now">Today</span></div>
+      <div class="d">Pick the venue first. <b>Borderless</b> (Azabudai Hills) is the infinity-crystal one on the plan; <b>Planets</b> (Toyosu) is the barefoot wade-through-water one from your remix. Both sell out days ahead in August.</div>
+      <a class="go" href="https://borderless.teamlab.art/" target="_blank" rel="noopener">Borderless &#8599;</a>
+      <a class="go" href="https://www.teamlab.art/e/planets/" target="_blank" rel="noopener">Planets &#8599;</a>
+    </div>
+  </div>
+
+  <h2><span class="jp">新幹線</span>Bullet Train Seats<span class="rule"></span><span class="n">3 legs</span></h2>
+  <div class="note">Book on <b>smartEX</b>, the official JR site. No booking fee, free changes, and you can ride off your phone. Set the account up once and all three legs take five minutes. <b>Your Suica is not a shinkansen ticket.</b> It only taps you through local gates.</div>
+
+  <div class="item" data-id="smartex">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Create the smartEX account</div>
+      <div class="d">Do this first, then the three legs below. Needs a credit card.</div>
+      <a class="go" href="https://smart-ex.jp/en/" target="_blank" rel="noopener">smartEX &#8599;</a>
+    </div>
+  </div>
+
+  <div class="item" data-id="rail1">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Tokyo &#8594; Kyoto, Thu Aug 6</div>
+      <div class="d">Reserved seats, two of you, with luggage. Peak August, do not wing this one.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="rail2">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Osaka &#8594; Hiroshima round trip, Wed Aug 12</div>
+      <div class="d">Early out, evening back. Reserved both directions so the Miyajima day isn't a standing-room gamble.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="rail3">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Kyoto &#8594; Osaka, Sun Aug 9<span class="tag opt">Optional</span></div>
+      <div class="d">Short hop with the bags after Arashiyama. Fine to buy day-of, but reserving costs you nothing.</div>
+    </div>
+  </div>
+
+  <h2><span class="jp">入国</span>Entry &amp; Documents<span class="rule"></span></h2>
+
+  <div class="item hot" data-id="vjw-fd">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Register FD on Visit Japan Web<span class="tag tmw">Wed Jul 29</span></div>
+      <div class="d">He brings his passport tomorrow. Add him as a companion under your account so it's one login, not two. Flight UA32 into Narita Sun Aug 2, address is Hotel Gracery Shinjuku.</div>
+      <a class="go" href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">Visit Japan Web &#8599;</a>
+    </div>
+  </div>
+
+  <div class="item" data-id="vjw-qr">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Screenshot both QR codes</div>
+      <div class="d">Save to your Photos favorites. Airport wifi at Narita is not something to bet a customs line on.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="passport-copies">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Photo both passports, leave a copy at home</div>
+      <div class="d">Photos on your phone plus a copy with someone stateside. Ten seconds now, saves a nightmare later.</div>
+    </div>
+  </div>
+
+  <h2><span class="jp">スイカ</span>Suica &amp; Money<span class="rule"></span></h2>
+
+  <div class="item hot" data-id="suica-topup">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Top the Suica up properly</div>
+      <div class="d"><b>&yen;1,000 is about five train rides.</b> A single Tokyo hop runs &yen;180 to &yen;210, and Suica also pays for convenience stores, vending machines, and plenty of restaurants. Load <b>&yen;10,000</b> before you land, then top up as you go. Use the Mastercard or the Amex, because a foreign-issued Visa gets rejected for Suica top-ups. Cash works at any 7-Eleven register.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="suica-fd">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Put a Suica on FD's phone</div>
+      <div class="d">Wallet, plus button, Transit Card, Japan, Suica. His own phone, his own card. No deposit. Don't let him be the guy at the ticket machine every ride.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="cards">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Tell the card issuers you're gone Aug 1 to 21</div>
+      <div class="d">Cover Japan <b>and</b> Cayman in one call, and confirm which card in your wallet has no foreign transaction fee. That's the one that lives in the front slot.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="yen">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Yen cash for arrival day</div>
+      <div class="d">Japan is far more cashless than it was, but small ramen counters, shrines, and Nara deer crackers still want coins. 7-Eleven ATMs at the airport give the best rate, so don't buy yen here.</div>
+    </div>
+  </div>
+
+  <h2><span class="jp">仕事</span>Work Coverage<span class="rule"></span><span class="n">gone 3 weeks</span></h2>
+  <div class="note">You're out <b>Aug 1 through Aug 21</b> across both trips. Your calendar still has the <b>Daily Check In every weekday Aug 3 to 13</b> and the <b>Weekly Tactical on Aug 4 and Aug 11</b> sitting inside the trip.</div>
+
+  <div class="item" data-id="ooo">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Outlook out-of-office, Aug 1 to 21</div>
+      <div class="d">Point internal at Jeff and Tim, external at whoever owns the reply.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="deleg">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Delegation note to Jeff, Tim, Alexis, Beth</div>
+      <div class="d">Short and specific: who decides what without you, and the one or two things that wait. Otherwise it all stacks up for Aug 24.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="decline">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Decline the meetings inside the trip</div>
+      <div class="d">Daily Check In Aug 3 to 13, Weekly Tactical Aug 4 and Aug 11. Decline the occurrences, not the series, so nobody sits there waiting on you.</div>
+    </div>
+  </div>
+
+  <h2><span class="jp">出発</span>Departure Week<span class="rule"></span></h2>
+
+  <div class="item" data-id="pack">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Pack for BOTH trips</div>
+      <div class="d">Japan Aug 1 to 13, then Cayman Aug 14 to 21. You land at O'Hare 8:26pm Thu Aug 13 and fly out again 6:59am Fri Aug 14. <b>Ten hours.</b> The Cayman bag gets packed now and stays packed.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="checkin">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Online check-in, Fri Jul 31<span class="tag opt">Fri</span></div>
+      <div class="d">UA2373 leaves O'Hare at 6:00am Saturday. Check in the night before and sleep instead of standing at a kiosk.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="transfer">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Save the Narita transfer voucher offline</div>
+      <div class="d">The Aug 2 ground ride to Shinjuku is already booked. Screenshot it so it's on your phone when you clear customs with no signal.</div>
+    </div>
+  </div>
+
+  <div class="item" data-id="meds">
+    <div class="box"></div>
+    <div class="body">
+      <div class="t">Meds and toiletries</div>
+      <div class="d">Anything prescription travels in its original bottle in the carry-on. No power adapter needed either. Japan uses the same flat two-prong plug you already own.</div>
+    </div>
+  </div>
+
+  <details class="handled">
+    <summary>Already handled, don't re-do these</summary>
+    <ul>
+      <li><b>Flights booked</b> and on your calendar: out Sat Aug 1, land Narita 2:10pm Sun Aug 2, home Thu Aug 13.</li>
+      <li><b>All three hotels booked</b>: Gracery Shinjuku, Solaria Kyoto Premier, Fairfield Namba.</li>
+      <li><b>Narita to Shinjuku ground transfer</b> booked for Aug 2.</li>
+      <li><b>FD's passport is in hand.</b></li>
+      <li><b>Your Visit Japan Web registration</b> is done.</li>
+      <li><b>Suica card in hand</b> (just needs more yen on it).</li>
+      <li><b>International plan active on both phones</b>, so no eSIM or pocket wifi needed.</li>
+      <li><b>PTO blocked</b> on your calendar for the whole window.</li>
+      <li><b>Maria and Mami both have the dates.</b> No objection, no follow-up needed.</li>
+    </ul>
+  </details>
+
+  <footer>
+    Checks save on this phone automatically &middot; back to the <a href="index.html">itinerary</a><br>
+    <button class="reset" id="reset">Clear all checks</button>
+  </footer>
+</div>
+
+<div class="saved" id="saved">Saved</div>
+
+<script>
+(function(){
+  var KEY='jp2026-checklist-v1';
+  var items=[].slice.call(document.querySelectorAll('.item'));
+  var fill=document.getElementById('fill'),pct=document.getElementById('pct'),
+      count=document.getElementById('count'),left=document.getElementById('left'),
+      allclear=document.getElementById('allclear'),saved=document.getElementById('saved');
+  var savedTimer;
+
+  function load(){
+    try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}
+  }
+  function store(state){
+    try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+  }
+  function flash(){
+    saved.classList.add('show');
+    clearTimeout(savedTimer);
+    savedTimer=setTimeout(function(){saved.classList.remove('show');},1100);
+  }
+  function render(){
+    var done=items.filter(function(i){return i.classList.contains('done');}).length;
+    var total=items.length;
+    var p=total?Math.round(done/total*100):0;
+    fill.style.width=p+'%';
+    pct.textContent=p+'%';
+    count.textContent=done+' of '+total+' done';
+    left.textContent=(total-done)+' left';
+    allclear.classList.toggle('on',done===total&&total>0);
+  }
+
+  var state=load();
+  items.forEach(function(it){
+    if(state[it.dataset.id]) it.classList.add('done');
+    it.addEventListener('click',function(e){
+      if(e.target.tagName==='A') return;      // let the booking links through
+      it.classList.toggle('done');
+      state[it.dataset.id]=it.classList.contains('done');
+      store(state);render();flash();
+    });
+  });
+  render();
+
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Clear every check on this list?')) return;
+    state={};store(state);
+    items.forEach(function(it){it.classList.remove('done');});
+    render();
+  });
+
+  // countdown to wheels-up, Sat Aug 1 2026 6:00am Chicago (UTC-5)
+  var dep=new Date('2026-08-01T06:00:00-05:00');
+  function tick(){
+    var ms=dep-new Date();
+    var el=document.getElementById('cd');
+    if(ms<=0){el.innerHTML='<b>In the air.</b>';return;}
+    var d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000);
+    el.innerHTML='Wheels up in <b>'+d+'d '+h+'h '+m+'m</b>';
+  }
+  tick();setInterval(tick,30000);
+})();
+</script>
+</body>
+</html>
