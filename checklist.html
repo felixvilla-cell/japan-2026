@@ -86,6 +86,18 @@
     text-decoration:none;color:var(--gold);border:1px solid rgba(217,180,99,.45);border-radius:99px;padding:6px 12px;}
   .go:active{background:rgba(217,180,99,.14);}
 
+  /* watch-these video block */
+  .vids{margin-top:11px;background:rgba(42,58,95,.24);border:1px solid rgba(255,255,255,.07);
+    border-left:3px solid var(--gold);border-radius:10px;padding:10px 12px 4px;}
+  .vids .vh{font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:6px;}
+  .vids a{display:block;text-decoration:none;color:#dbe4f4;font-size:13px;line-height:1.4;
+    padding:7px 0;border-top:1px solid rgba(255,255,255,.06);}
+  .vids a.first{border-top:0;}
+  .vids a b{color:#fff;font-weight:700;}
+  .vids a i{display:block;font-style:normal;font-size:11.5px;color:#8fa0bd;margin-top:2px;}
+  .vids a:active{color:var(--gold);}
+
   /* notes + done panel */
   .note{background:rgba(42,58,95,.28);border:1px solid rgba(255,255,255,.08);border-left:3px solid var(--gold);
     border-radius:10px;padding:12px 14px;font-size:13.5px;color:#c9d3e5;margin:4px 0 14px;}
@@ -148,8 +160,15 @@
     <div class="body">
       <div class="t">Know the Tuesday park sequence cold</div>
       <div class="d">Nintendo World entry is <b>12:30&ndash;1:30 PM</b>, Mario Kart <b>12:30&ndash;1:00</b>, Yoshi <b>1:00&ndash;1:30</b> &mdash; zero slack, so be at the SNW gate at 12:30 sharp. Hollywood Dream, Flying Dinosaur and Minion Mayhem are anytime, so do them in the morning. <b>Eat lunch before 12:15:</b> there is no re-entry once you go in, and no re-entry to the park at all if you leave. Mine-Cart Madness is standby only &mdash; hit it at 1:30 right after Yoshi.</div>
-    </div>
-  </div>
+      <div class="vids">
+        <div class="vh">Watch these before Aug 11</div>
+        <a class="first" href="https://www.youtube.com/watch?v=BMg-y4VFtiM" target="_blank" rel="noopener"><b>How the Area Timed Entry ticket works</b> &#8599;<i>Official USJ channel &mdash; the entry system straight from the park</i></a>
+        <a href="https://www.youtube.com/watch?v=zYWVNDCuVis" target="_blank" rel="noopener"><b>Super Nintendo World DO's and DON'Ts</b> &#8599;<i>Carry On Monkey &mdash; the clearest breakdown of the whole entry system</i></a>
+        <a href="https://www.youtube.com/watch?v=ZaWWdXkiBfQ" target="_blank" rel="noopener"><b>How to guarantee entry (two ways)</b> &#8599;<i>The Joyce Adventures &mdash; covers the Express Pass route, which is ours</i></a>
+        <a href="https://www.youtube.com/watch?v=XjMQoi7Crbs" target="_blank" rel="noopener"><b>Scanning your tickets into the USJ app</b> &#8599;<i>Let's Go Mum! &mdash; do this part at the hotel, not at the gate</i></a>
+        <a href="https://www.youtube.com/watch?v=0U55C6M-gRE" target="_blank" rel="noopener"><b>USJ first-timer guide: Express Pass, app, hacks</b> &#8599;<i>PhatLife Project &mdash; 2026, the most current of the bunch</i></a>
+      </div>
+      <div class="d" style="margin-top:9px"><b>What the videos won't tell you:</b> most of them are about scrambling for the free timed-entry ticket at park open. Skip that stress &mdash; our Express Pass 5 has the 12:30 window locked. Watch them for the gate mechanics and the Power-Up Band, not the plan.</div>
     </div>
   </div>
 
@@ -379,7 +398,7 @@
   items.forEach(function(it){
     if(state[it.dataset.id]) it.classList.add('done');
     it.addEventListener('click',function(e){
-      if(e.target.tagName==='A') return;      // let the booking links through
+      if(e.target.closest('a')) return;       // let the booking + video links through
       it.classList.toggle('done');
       state[it.dataset.id]=it.classList.contains('done');
       store(state);render();flash();
